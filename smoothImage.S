@@ -176,7 +176,9 @@ smooth_pix:
 
 	// For each color (r,g,b)
 	// Set sum = 0
+	mov r4, #0
 	// 	For( i=-1, i < 2, i++ )
+	
 	//		For( j=-1, j < 2, j++ )
 	//	
 
@@ -186,19 +188,44 @@ smooth_pix:
 write_pix:
 	stmfd sp!, {lr}
 
+        /*
+                passing to get_pix
+                        r0:     base address to image
+                        r1:     row index
+                        r2:     3-pixel column index
+        */
+
+        // Get offset into rows array
+        mov r4, r1, lsl #4      // 4*row index = offset
+        // Load row base address
+        ldr r0, [r0, r4]        // Load base address+offset
+        // Get column offset into row
+        add r4, r2, r2, lsl #1  // 3*column index = offset
+        // Load a word from this address and store in r0
+        str r0, [r0, r4]        // Write row_base_address+offset
+
 	ldmfd sp!, {lr}
 	mov pc, lr
 
 get_pix:
-	stmfd sp!, {lr}
+	stmfd sp!, {r4, r5, lr}
 
 	/*
 		passing to get_pix
-	`		r0:	base address to image
+			r0:	base address to image
 			r1:	row index
 			r2:	3-pixel column index
 	*/
 
-	ldmfd sp!, {lr}
+	// Get offset into rows array
+	mov r4, r1, lsl #4	// 4*row index = offset
+	// Load row base address
+	ldr r0, [r0, r4]	// Load base address+offset
+	// Get column offset into row
+	add r4, r2, r2, lsl #1	// 3*column index = offset
+	// Load a word from this address and store in r0
+	ldr r0, [r0, r4]	// Load row_base_address+offset
+
+	ldmfd sp!, {r4, r5, lr}
 	mov pc, lr
 

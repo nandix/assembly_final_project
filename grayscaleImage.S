@@ -233,31 +233,27 @@ gray_pix:
 			r3:	amount to brighten
 	*/
 
-	// Compute 3*red 	(offset 0)
+	// Compute 1*blue 	(offset 0)
 	//	-Mask to get first byte
-	and r4, r1, #0xFF000000
-	//	-Shift right 24
-	lsr r4, r4, #24
-	//	-Calculate 3*red
-	mov r0, #3
-	mul r4, r4, r0
+	and r4, r1, #0xFF0000
+	//	-Shift right 16
+	lsr r4, r4, #16
 
 	// Compute 6*green 	(offset 1)
 	// 	-Mask to get 2nd byte
-	and r5, r1, #0xFF0000
+	and r5, r1, #0xFF00
 	//	-Shift right 16
-	lsr r5, r5, #16
+	lsr r5, r5, #8
 	// 	-Calculate 6*green
 	mov r0, #6
 	mul r5, r5, r0
 
 	// Compute blue 	(offset 2)
 	//	-Mask to get 3rd byte
-	and r6, r1, #0xFF00
-	// 	-Shift right 8
-	lsr r6, r6, #8
+	and r6, r1, #0xFF
 	// 	-Don't need to calculate blue (multiplied by 1)
-	
+	mov r0, #3
+	mul r6, r6, r0	// Multiply by 6	
 
 	// Add red, blue, and green
 	// 	-Add red+green

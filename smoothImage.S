@@ -271,7 +271,21 @@ fix_rows:
 	sub r2, r7, #1	// Move dat column 
 	bl write_pix 
 
-	str r9, [r8, #(5*4)]	
+	mov r4, #0
+free_loop:
+	
+	ldr r0, [r8, #(5*4)]		// Load the image pointer
+	ldr r0, [r0, r4, lsl #2]	// Load the row pointer
+	bl free
+	
+	add r4, r4, #1
+	cmp r4, r6
+	ble free_loop
+	
+	ldr r0, [r8, #(5*4)]	// Load the image pointer
+	bl free			// Free the row pointer
+
+	str r9, [r8, #(5*4)]	// Point image to temp image
 
 	ldmfd	sp!,{r4, r5, r6, r7, r8, r9, r10, r11, lr}
 	mov	pc,lr

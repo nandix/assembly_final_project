@@ -81,7 +81,7 @@ minMax_rows:
 	ldr r10, [r1, r2]	// Load r1 offset by 4*i bytes
  
 	mov r1, #1		// Move 0 into r1 to hold max
-	mov r2, #0		// Move 1 into r2 to hold min
+	mov r2, #255		// Move 1 into r2 to hold min
 	// 	- For j < cols
 minMax_cols:
 	/*
@@ -108,14 +108,12 @@ minMax_cols:
 	cmp r4, r6		// Compare rows to rows counter
 	blt minMax_rows		// Go through rows loop again if counter <= rows
 	
-	ldr r3, =minMax		// load the address of minMax
-	str r1, [r3]		// Store the min
-	add r3, #4		// Offset by 4 bytes
-	str r2, [r3]		// Store the max
+	mov r0, r1
+	mov r1, r2
 
 	//	- Put pointer to minMax in r0 to return
 	ldr r0, =minMax
-	ldmfd sp!,{r4, r5, r6, r7, r8, r9, r10, lr}
+	ldmfd sp!,{r4, r5, r6, r7, r8, r9, r10,r11, lr}
 	mov pc, lr	// Return after checking min and max grayscale values	
 
 not_grayscale:

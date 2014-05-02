@@ -1,3 +1,25 @@
+/******************************************************************************
+ *
+ * \file brightenImage.S
+ *
+ * \brief This function brightens an image by an amount provided 
+ *
+ * \author Daniel Nix
+ *
+ * \date April 22, 2014
+ *
+ * This funciton is an assembly version of a C function to brighten a ppm
+ * 	image by an amount provided by the user. It improves performance
+ *	by reading in an entire word so that a pixel may be fetched in one
+ *	operation. This means that a pixel takes one read instead of 3.
+ *	as a result, this code is roughly a factor of two faster than the
+ * 	original C code.
+ *
+ * It should be compiled and linked using the makefile as follows:
+ *   make depend
+ *   make
+ * 
+ ******************************************************************************/
 
 	.data
 msg:	.asciz "Rows: %d \nCols: %d \n"

@@ -1,3 +1,24 @@
+/******************************************************************************
+ *
+ * \file negateImage.S
+ *
+ * \brief This function negates a .ppm image (if it is rgb)
+ *
+ * \author Daniel Nix
+ *
+ * \date Tuesday April 15, 2014
+ *
+ * This function is an improved version of a C function to negate
+ * 	an image. Performance is improved by reading in a word 
+ * 	so that an entire pixel may be operated on one load instead
+ * 	of doing three readbytes. As such, this program runs roughtly
+ * 	twice as fast as the original C code.
+ *
+ * It should be compiled with the provided makefile as follows:
+ *   make depend
+ *   make clean
+ * 
+******************************************************************************/
 
 	.data
 msg:	.asciz "Rows: %d \nCols: %d \n"

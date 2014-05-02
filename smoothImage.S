@@ -1,3 +1,25 @@
+/******************************************************************************
+ *
+ * \file smoothImage.S
+ *
+ * \brief This function smooths a ppm image using assembly code
+ *
+ * \author Daniel Nix
+ *
+ * \date May 1, 2014
+ *
+ * This function is an assembly code version of a C function which
+ * 	smooths a ppm image. It improves performance by reading a pixel
+ *	at a time by reading a word, as opposed to reading byte by byte.
+ *	This improves the speed of this function over the C version by
+ *	roughly a factor of two.
+ *
+ * It should be compiled and linked using the makefile as follows:
+ *   make depend
+ *   make
+ *
+ ******************************************************************************/
+
 
 	.data
 msg:    .asciz "Rows: %d \nCols: %d \n"

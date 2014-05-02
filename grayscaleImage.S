@@ -1,3 +1,25 @@
+/******************************************************************************
+ *
+ * \file grayscaleImage.S
+ *
+ * \brief This function grayscales a 3 color ppm image
+ *
+ * \author Daniel Nix
+ *
+ * \date April 29, 2014
+ *
+ * This function is an assembly version of a C grayscale function. 
+ *	It improves performance over the C function by reading in an entire
+ * 	pixel in one word as opposed to reading each color individually as
+ *	a read byte. As a result the grayscale operation is roughly twice
+ *	as fast as its C counterpart.
+ *
+ * It should be compiled and linked using the makefile as follows:
+ *   make depend
+ *   make
+ *
+ ******************************************************************************/
+
 
 	.data
 msg:	.asciz "Rows: %d \nCols: %d \n"
